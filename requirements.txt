@@ -1,0 +1,10 @@
+pytorch
+tensorflow
+pandas
+jupyter
+matplotlib
+seaborn
+keras
+sklearn
+Kaggle
+pytest

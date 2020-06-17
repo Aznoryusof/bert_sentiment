@@ -1,0 +1,11 @@
+# Ignore cache files
+__pycache__
+.pytest_cache
+
+# Ignore data files
+data/
+
+# Ignore local files
+local/
+check.csv
+
