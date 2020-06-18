@@ -4,6 +4,7 @@ import textwrap
 
 
 MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
 from config import *
@@ -59,19 +60,35 @@ def _extract_pos_neg(df, minimum_positive_reviewer_score, minimum_positive_word_
     return data_extracted
 
 
+def _save_preprocessed_data(df):
+    files = [
+        (
+            df, "hotel_reviews_processed.csv"
+        )
+    ]
+
+    for data, filename in files:
+        if not os.path.exists(os.path.join(DATA_DIR, filename)):
+            print("Saving to", DATA_DIR)
+
+            data.to_csv(
+                os.path.join(DATA_DIR, filename)
+            )
+
+        else:
+            print("Processed data already saved in ", DATA_DIR)
+
+
 def process_data():
-    data = pd.read_csv("data/Hotel_reviews.csv")
+    data = pd.read_csv("data/hotel_reviews.csv")
     data_clean = _clean_data(data)
     data_extracted = _extract_pos_neg(
         data_clean, minimum_positive_reviewer_score, minimum_positive_word_count,
         maximum_negative_reviewer_score, minimum_negative_word_count
     )
 
-    print(data_extracted.head())
-    print(data_extracted.tail())
-    print(data_extracted.info())
-    print(data_extracted["label"].value_counts())
+    _save_preprocessed_data(data_extracted)
+    
 
 if __name__ == "__main__":
-    #wrapper = textwrap.TextWrapper(width=80) 
     process_data()
