@@ -72,7 +72,8 @@ def _save_preprocessed_data(df):
             print("Saving to", DATA_DIR)
 
             data.to_csv(
-                os.path.join(DATA_DIR, filename)
+                os.path.join(DATA_DIR, filename),
+                index = False
             )
 
         else:
