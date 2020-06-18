@@ -8,4 +8,5 @@ data/
 # Ignore local files
 local/
 check.csv
+results/
 
