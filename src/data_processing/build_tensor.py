@@ -123,7 +123,7 @@ def build_tensor(data_path):
     Args:
         data_path (str): The path of the csv file to be 
     """    
-    data = pd.read_csv(os.path.join(DATA_DIR, data_path))
+    data = pd.read_csv(os.path.join(DATA_DIR, data_path))[:1000]
     complete_train_inputs, test_inputs, complete_train_labels, test_labels = _train_test_split(data, seed)
     complete_train_labels = complete_train_labels.to_numpy().astype(int)
 

@@ -15,3 +15,4 @@ minimum_positive_reviewer_score = 3
 seed = 0
 MAX_LEN = 128
 batch_size = 32
+epochs = 4
