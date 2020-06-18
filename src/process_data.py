@@ -81,7 +81,7 @@ def _save_preprocessed_data(df):
 
 
 def process_data():
-    data = pd.read_csv("data/hotel_reviews.csv")
+    data = pd.read_csv("data/Hotel_Reviews.csv")
     data_clean = _clean_data(data)
     data_extracted = _extract_pos_neg(
         data_clean, minimum_positive_reviewer_score, minimum_positive_word_count,

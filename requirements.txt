@@ -1,11 +1,11 @@
-#pytorch
-#tensorflow
 pandas
-#jupyter
-#matplotlib
-#seaborn
-#keras
-#sklearn
-#Kaggle
 pytest
-#transformers
+# pytorch
+# tensorflow
+# jupyter
+# matplotlib
+# seaborn
+# keras
+# sklearn
+# Kaggle
+# transformers
