@@ -23,7 +23,7 @@ def _format_time(elapsed):
     return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
-def evaluate(test_dataloader, model):
+def evaluate(test_dataloader, model, device):
     # Put model in evaluation mode
     model.eval()
 

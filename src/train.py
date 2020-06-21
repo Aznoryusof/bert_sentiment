@@ -57,7 +57,7 @@ def train():
         )
     plot_training(results_dict["loss_values"])
     data_test_dict = build_tensor_test(data_dict)
-    evaluated_dict = evaluate_test(data_test_dict["test_dataloader"], results_dict["model_trained"])
+    evaluated_dict = evaluate_test(data_test_dict["test_dataloader"], results_dict["model_trained"], device)
     
 
 if __name__ == "__main__":
