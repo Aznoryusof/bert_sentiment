@@ -80,16 +80,22 @@ def _save_preprocessed_data(df):
             print("Processed data already saved in ", DATA_DIR)
 
 
-def process_data():
+def _sample(df, sample_size):
+    df_final = df.sample(frac=1).head(sample_size)
+
+    return df_final
+
+
+def process_data(sample_size):
     data = pd.read_csv("data/Hotel_Reviews.csv")
     data_clean = _clean_data(data)
     data_extracted = _extract_pos_neg(
         data_clean, minimum_positive_reviewer_score, minimum_positive_word_count,
         maximum_negative_reviewer_score, minimum_negative_word_count
     )
-
-    _save_preprocessed_data(data_extracted)
+    data_sampled = _sample(data_extracted, sample_size)
+    _save_preprocessed_data(data_sampled)
     
 
 if __name__ == "__main__":
-    process_data()
+    process_data(2000)

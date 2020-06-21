@@ -9,7 +9,7 @@ RESULT_DIR = os.path.join(MAIN_DIR, "result/")
 sys.path.append(MAIN_DIR)
 
 
-def evaluate(test_inputs):
+def evaluate(test_dataloader, model):
     # Put model in evaluation mode
     model.eval()
 
