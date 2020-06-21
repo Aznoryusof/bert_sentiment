@@ -5,8 +5,6 @@ DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
 
-
-
 def build_tensor_test(data_dict):
     # Tokenize all of the sentences and map the tokens to thier word IDs.
     test_input_ids = []
@@ -53,8 +51,8 @@ def build_tensor_test(data_dict):
 
     # Create a mask of 1s for each token followed by 0s for padding
     for seq in test_input_ids:
-    seq_mask = [float(i>0) for i in seq]
-    test_attention_masks.append(seq_mask) 
+        seq_mask = [float(i>0) for i in seq]
+        test_attention_masks.append(seq_mask) 
 
     # Convert to tensors.
     test_inputs = torch.tensor(test_input_ids)
