@@ -12,7 +12,7 @@ from keras.preprocessing.sequence import pad_sequences
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
 
-def build_tensor_test(data_dict):
+def build_tensor_evaluate(data_dict):
     # Tokenize all of the sentences and map the tokens to thier word IDs.
     test_input_ids = []
 
