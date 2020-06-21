@@ -5,9 +5,10 @@ DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
 from src.data_processing.build_tensor import *
+from src.data_processing.build_tensor_evaluate import *
 from src.model.bert_training_loop import *
 from src.evaluate.plot_training import *
-from src.evaluate.evaluate_test import *
+from src.evaluate.evaluate import *
 from src.utils.gpu_setup import gpu_setup
 from config import epochs
 
@@ -56,8 +57,8 @@ def train():
             setup_dict["scheduler"], device
         )
     plot_training(results_dict["loss_values"])
-    data_test_dict = build_tensor_test(data_dict)
-    evaluated_dict = evaluate_test(data_test_dict["test_dataloader"], results_dict["model_trained"], device)
+    data_test_dict = build_tensor_evaluate(data_dict)
+    evaluated_dict = evaluate(data_test_dict["test_dataloader"], results_dict["model_trained"], device)
     
 
 if __name__ == "__main__":
