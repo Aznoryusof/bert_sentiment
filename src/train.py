@@ -2,6 +2,7 @@ import os, sys
 
 MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(MAIN_DIR, "data/")
+RESULT_DIR = os.path.join(MAIN_DIR, "result/")
 sys.path.append(MAIN_DIR)
 
 from src.data_processing.build_tensor import *
@@ -14,6 +15,7 @@ from config import epochs
 
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 from transformers import get_linear_schedule_with_warmup
+import pytorch
 
 
 def _training_setup(data_dict):
@@ -47,6 +49,18 @@ def _training_setup(data_dict):
     }
 
 
+def _save_model(model):
+    if not os.path.exists(RESULT_DIR)
+        os.makedirs(RESULT_DIR)
+
+    print("Saving model to %s" % RESULT_DIR)
+
+    model_to_save = model.module if hasattr(model, 'module') else model
+    model_to_save.save_pretrained(RESULT_DIR)
+    tokenizer.save_pretrained(RESULT_DIR)
+    torch.save(args, os.path.join(RESULT_DIR, 'training_args.bin'))
+
+
 def train():
     device = gpu_setup()
     data_dict = build_tensor("hotel_reviews_processed.csv")
@@ -59,6 +73,7 @@ def train():
     plot_training(results_dict["loss_values"])
     data_test_dict = build_tensor_evaluate(data_dict)
     evaluated_dict = evaluate(data_test_dict["test_dataloader"], results_dict["model_trained"], device)
+    _save_model(results_dict["model_trained"])
     
 
 if __name__ == "__main__":
