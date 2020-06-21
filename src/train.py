@@ -15,7 +15,7 @@ from config import epochs
 
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 from transformers import get_linear_schedule_with_warmup
-import pytorch
+import torch
 
 
 def _training_setup(data_dict):
