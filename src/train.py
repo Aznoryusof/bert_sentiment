@@ -49,7 +49,7 @@ def _training_setup(data_dict):
     }
 
 
-def _save_model(model):
+def _save_model(model, tokenizer):
     if not os.path.exists(RESULT_DIR):
         os.makedirs(RESULT_DIR)
 
@@ -73,7 +73,7 @@ def train():
     plot_training(results_dict["loss_values"])
     data_test_dict = build_tensor_evaluate(data_dict)
     evaluated_dict = evaluate(data_test_dict["test_dataloader"], results_dict["model_trained"], device)
-    _save_model(results_dict["model_trained"])
+    _save_model(results_dict["model_trained"], data_dict["tokenizer"])
     
 
 if __name__ == "__main__":
