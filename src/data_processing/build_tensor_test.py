@@ -5,6 +5,9 @@ DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
 
+from config import seed, MAX_LEN, batch_size
+
+
 def build_tensor_test(data_dict):
     # Tokenize all of the sentences and map the tokens to thier word IDs.
     test_input_ids = []
