@@ -1,12 +1,26 @@
 import os, sys
 import numpy as np
 import torch
+import time
+import datetime
+import random
 
 from sklearn.metrics import roc_auc_score
 
 MAIN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RESULT_DIR = os.path.join(MAIN_DIR, "result/")
 sys.path.append(MAIN_DIR)
+
+
+def _format_time(elapsed):
+    '''
+    Takes a time in seconds and returns a string hh:mm:ss
+    '''
+    # Round to the nearest second.
+    elapsed_rounded = int(round((elapsed)))
+    
+    # Format as hh:mm:ss
+    return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
 def evaluate(test_dataloader, model):
@@ -28,7 +42,7 @@ def evaluate(test_dataloader, model):
         # Progress update every 100 batches.
         if step % 100 == 0 and not step == 0:
             # Calculate elapsed time in minutes.
-            elapsed = format_time(time.time() - t0)
+            elapsed = _format_time(time.time() - t0)
             
             # Report progress.
             print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(test_dataloader), elapsed))
