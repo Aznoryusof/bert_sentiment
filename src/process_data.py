@@ -98,4 +98,6 @@ def process_data(sample_size):
     
 
 if __name__ == "__main__":
-    process_data(2000)
+    data = pd.read_csv("data/Hotel_Reviews.csv")
+    data_length = len(data)
+    process_data(data_length)

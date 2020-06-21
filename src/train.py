@@ -58,8 +58,7 @@ def _save_model(model, tokenizer):
     model_to_save = model.module if hasattr(model, 'module') else model
     model_to_save.save_pretrained(RESULT_DIR)
     tokenizer.save_pretrained(RESULT_DIR)
-    torch.save(args, os.path.join(RESULT_DIR, 'training_args.bin'))
-
+    
 
 def train():
     device = gpu_setup()
