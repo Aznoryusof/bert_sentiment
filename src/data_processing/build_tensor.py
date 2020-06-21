@@ -139,7 +139,8 @@ def build_tensor(data_path):
         "train_dataloader": train_dataloader,
         "validation_dataloader": validation_dataloader,
         "test_inputs": test_inputs,
-        "test_labels": test_labels
+        "test_labels": test_labels,
+        "tokenizer": tokenized_dict["tokenizer"]
     }
 
 

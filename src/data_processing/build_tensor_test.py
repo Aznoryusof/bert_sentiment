@@ -21,7 +21,7 @@ def build_tensor_test(data_dict):
         #   (2) Prepend the `[CLS]` token to the start.
         #   (3) Append the `[SEP]` token to the end.
         #   (4) Map tokens to their IDs.
-        encoded_sent = tokenizer.encode(
+        encoded_sent = data_dict["tokenizer"].encode(
                             sen,                      # Sentence to encode.
                             add_special_tokens = True, # Add '[CLS]' and '[SEP]'
                             max_length = MAX_LEN,          # Truncate all sentences.                        
