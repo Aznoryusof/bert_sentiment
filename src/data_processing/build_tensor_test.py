@@ -70,5 +70,5 @@ def build_tensor_test(data_dict):
     return {
         "test_data": test_data,
         "test_sampler": test_sampler,
-        "test_dataloader":, test_dataloader
+        "test_dataloader": test_dataloader
     }
