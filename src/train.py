@@ -50,7 +50,7 @@ def _training_setup(data_dict):
 
 
 def _save_model(model):
-    if not os.path.exists(RESULT_DIR)
+    if not os.path.exists(RESULT_DIR):
         os.makedirs(RESULT_DIR)
 
     print("Saving model to %s" % RESULT_DIR)
