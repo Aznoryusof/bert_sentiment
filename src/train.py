@@ -56,7 +56,7 @@ def train():
             setup_dict["scheduler"], device
         )
     plot_training(results_dict["loss_values"])
-    # evaluate_test()
+    evaluated_dict = evaluate_test()
     
 
 if __name__ == "__main__":
