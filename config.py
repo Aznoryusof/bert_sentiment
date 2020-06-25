@@ -16,3 +16,4 @@ seed = 0
 MAX_LEN = 128
 batch_size = 32
 epochs = 2
+use_gpu_predict = False

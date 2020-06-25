@@ -9,6 +9,7 @@ import torch
 import textwrap
 from transformers import BertForSequenceClassification, BertTokenizer
 from src.utils.gpu_setup import gpu_setup
+from config import use_gpu_predict
 
 from config import MAX_LEN
 
@@ -53,6 +54,24 @@ def _load_model_artifacts(device):
     }
 
 
+def _load_model_artifacts_cpu():
+    print("\nLoading model artifacts...")
+
+    vecs = np.load('result/embeddings.npy')
+    model = BertForSequenceClassification.from_pretrained(
+        RESULT_DIR,
+        output_hidden_states = True,
+    )
+
+    tokenizer = BertTokenizer.from_pretrained(RESULT_DIR)
+
+    return {
+        "model": model,
+        "vecs": vecs,
+        "tokenizer": tokenizer
+    }
+
+
 def _predict_string(string, model_dict, device):
 
     encoded_review = model_dict["tokenizer"].encode_plus(
@@ -78,14 +97,45 @@ def _predict_string(string, model_dict, device):
     }
 
 
+def _predict_string_cpu(string, model_dict):
+
+    encoded_review = model_dict["tokenizer"].encode_plus(
+        string,
+        max_length=128,
+        add_special_tokens=True,
+        return_token_type_ids=False,
+        pad_to_max_length=True,
+        return_attention_mask=True,
+        return_tensors='pt',
+    )
+
+    input_ids = encoded_review['input_ids']
+    attention_mask = encoded_review['attention_mask']
+    output = model_dict["model"](input_ids, attention_mask)
+    prediction = np.argmax(output[0].detach().cpu().numpy())
+    sentiment = class_names[prediction]
+    logit = output[0].detach().cpu().numpy()
+
+    return {
+        "sentiment": sentiment,
+        "logit": logit
+    }
+
+
 def predict(string):
     model_available = _check_model_exist()
     if model_available:
-        device = gpu_setup()
-        model_dict = _load_model_artifacts(device)
-        prediction = _predict_string(string, model_dict, device)
-        
-        return prediction
+        if use_gpu_predict & torch.cuda.is_available():
+            device = gpu_setup()
+            model_dict = _load_model_artifacts(device)
+            prediction = _predict_string(string, model_dict, device)
+            
+            return prediction
+        else:
+            model_dict = _load_model_artifacts_cpu()
+            prediction = _predict_string_cpu(string, model_dict)
+
+            return prediction
 
     else:
         print("Train model before running predictions.")
