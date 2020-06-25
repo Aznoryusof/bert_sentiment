@@ -1,6 +1,6 @@
 pandas
 pytest
-pytorch
+torch
 tensorflow
 jupyter
 matplotlib
