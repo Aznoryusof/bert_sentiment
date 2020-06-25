@@ -9,7 +9,7 @@ import torch
 import textwrap
 from transformers import BertForSequenceClassification, BertTokenizer
 from src.utils.gpu_setup import gpu_setup
-from config import use_gpu_predict
+from config import use_gpu_predict, prediction_text
 
 from config import MAX_LEN
 
@@ -142,7 +142,7 @@ def predict(string):
 
 
 if __name__ == "__main__":
-    test_string = "Ive probably stayed there 5 weeks in the last few months. Had to extend my latest stay by another 8 days and asked if I could get a late checkout due to a late flight. Basically refused and didn't offer anything in recognition of how much I've stayed there recently. the manager there is an idiot. Have moved to the Y Hotel. Not much more and a thousand times better Hotel. i won't be back X Hotel. You blew it!"
+    test_string = prediction_text
     prediction = predict(test_string)
     print("\nTest predictions on text:\n")
     print(wrapper.fill(test_string))
