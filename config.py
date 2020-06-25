@@ -1,5 +1,3 @@
-
-
 # Negative review comments has to be at least 5 words long
 minimum_negative_word_count = 5
 

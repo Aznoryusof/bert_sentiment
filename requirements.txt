@@ -1,11 +1,11 @@
 pandas
 pytest
-# pytorch
-# tensorflow
-# jupyter
-# matplotlib
-# seaborn
-# keras
-# sklearn
-# Kaggle
-# transformers
+pytorch
+tensorflow
+jupyter
+matplotlib
+seaborn
+keras
+sklearn
+Kaggle
+transformers
