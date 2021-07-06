@@ -70,7 +70,7 @@ def _load_model_artifacts_cpu():
 
 def _predict_string(string, model_dict, device):
 
-    encoded_review = model_dict["tokenizer"].encode_plus(
+    encoded_text = model_dict["tokenizer"].encode_plus(
         string,
         max_length=128,
         add_special_tokens=True,
@@ -80,8 +80,8 @@ def _predict_string(string, model_dict, device):
         return_tensors='pt',
     )
 
-    input_ids = encoded_review['input_ids'].to(device)
-    attention_mask = encoded_review['attention_mask'].to(device)
+    input_ids = encoded_text['input_ids'].to(device)
+    attention_mask = encoded_text['attention_mask'].to(device)
     output = model_dict["model"](input_ids, attention_mask)
     prediction = np.argmax(output[0].detach().cpu().numpy())
     sentiment = class_names[prediction]
@@ -95,7 +95,7 @@ def _predict_string(string, model_dict, device):
 
 def _predict_string_cpu(string, model_dict):
 
-    encoded_review = model_dict["tokenizer"].encode_plus(
+    encoded_text = model_dict["tokenizer"].encode_plus(
         string,
         max_length=128,
         add_special_tokens=True,
@@ -105,8 +105,8 @@ def _predict_string_cpu(string, model_dict):
         return_tensors='pt',
     )
 
-    input_ids = encoded_review['input_ids']
-    attention_mask = encoded_review['attention_mask']
+    input_ids = encoded_text['input_ids']
+    attention_mask = encoded_text['attention_mask']
     output = model_dict["model"](input_ids, attention_mask)
     prediction = np.argmax(output[0].detach().cpu().numpy())
     sentiment = class_names[prediction]

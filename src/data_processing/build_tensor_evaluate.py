@@ -7,9 +7,17 @@ sys.path.append(MAIN_DIR)
 import pandas as pd
 import numpy as np
 import torch
+import random
 from config import seed, MAX_LEN, batch_size
 from keras.preprocessing.sequence import pad_sequences
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+
+
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
 
 
 def build_tensor_evaluate(data_dict):
@@ -46,8 +54,8 @@ def build_tensor_evaluate(data_dict):
     # Get the labels from the DataFrame, and convert from booleans to ints.
     test_labels = data_dict["test_labels"].to_numpy().astype(int)
 
-    print('{:>10,} positive (contains attack)'.format(np.sum(test_labels)))
-    print('{:>10,} negative (not an attack)'.format(len(test_labels) - np.sum(test_labels)))
+    print('{:>10,} positive sentiment'.format(np.sum(test_labels)))
+    print('{:>10,} negative sentiment'.format(len(test_labels) - np.sum(test_labels)))
 
     # Pad our input tokens
     test_input_ids = pad_sequences(test_input_ids, maxlen=MAX_LEN, 
@@ -65,9 +73,6 @@ def build_tensor_evaluate(data_dict):
     test_inputs = torch.tensor(test_input_ids)
     test_masks = torch.tensor(test_attention_masks)
     test_labels = torch.tensor(test_labels)
-
-    # Set the batch size.  
-    batch_size = batch_size
 
     # Create the DataLoader.
     test_data = TensorDataset(test_inputs, test_masks, test_labels)

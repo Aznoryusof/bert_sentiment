@@ -1,6 +1,5 @@
 import pandas as pd
 import os, sys
-import textwrap
 
 
 MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,60 +9,18 @@ sys.path.append(MAIN_DIR)
 from config import *
 
 
-def _extract_positive(df, minimum_positive_reviewer_score, minimum_positive_word_count):
-    pos_extracted_df = df[["Positive_Review", "Positive_Review_Word_Count", "Reviewer_Score"]]
-    pos_extracted_df = pos_extracted_df[
-        (pos_extracted_df["Reviewer_Score"] >= minimum_positive_reviewer_score) &
-        (pos_extracted_df["Positive_Review_Word_Count"] > minimum_positive_word_count)
-    ]
-
-    pos_extracted_df["label"] = 1
-    pos_extracted_df["review"] = pos_extracted_df["Positive_Review"] 
-
-    return pos_extracted_df[["review", "label"]]
-
-
-def _extract_negative(df, maximum_negative_reviewer_score, minimum_negative_word_count):
-    neg_extracted_df = df[["Negative_Review", "Negative_Review_Word_Count", "Reviewer_Score"]]
-    neg_extracted_df = neg_extracted_df[
-        (neg_extracted_df["Reviewer_Score"] <= maximum_negative_reviewer_score) &
-        (neg_extracted_df["Negative_Review_Word_Count"] > minimum_negative_word_count)
-    ]
-
-    neg_extracted_df["label"] = 0
-    neg_extracted_df["review"] = neg_extracted_df["Negative_Review"] 
-
-    return neg_extracted_df[["review", "label"]]
-
-
-def _count_words(df, col_name):
-    word_count_list = [len(comment.split()) for comment in df[col_name]]
-    word_count_series = pd.Series(word_count_list) 
-
-    return word_count_series
-
-
 def _clean_data(df):
-    keep_col_names = ["Positive_Review", "Negative_Review", "Reviewer_Score"]
-    data_clean = df[keep_col_names]
-    data_clean["Positive_Review_Word_Count"] = _count_words(data_clean, "Positive_Review")
-    data_clean["Negative_Review_Word_Count"] = _count_words(data_clean, "Negative_Review")
+    data_clean=df.copy()
+    data_clean["Text"] = data_clean["Text"].str.lower()
+    #data_clean["Text"] = data_clean["Text"].str.replace("<br />", " ")
 
     return data_clean
-
-
-def _extract_pos_neg(df, minimum_positive_reviewer_score, minimum_positive_word_count, maximum_negative_reviewer_score, minimum_negative_word_count):
-    pos_reviews_df = _extract_positive(df, minimum_positive_reviewer_score, minimum_positive_word_count)
-    neg_reviews_df = _extract_negative(df, maximum_negative_reviewer_score, minimum_negative_word_count)
-    data_extracted = pos_reviews_df.append(neg_reviews_df, ignore_index=True)
-
-    return data_extracted
 
 
 def _save_preprocessed_data(df):
     files = [
         (
-            df, "hotel_reviews_processed.csv"
+            df, "Train_processed.csv"
         )
     ]
 
@@ -80,25 +37,20 @@ def _save_preprocessed_data(df):
             print("Processed data already saved in ", DATA_DIR)
 
 
-def _sample(df, sample_size):
-    df_final = df.sample(frac=1).head(sample_size)
+def _sample(df, data_size):
+    df_final = df.sample(frac=1).head(data_size)
 
     return df_final
 
 
-def process_data(sample_size):
-    data = pd.read_csv("data/Hotel_Reviews.csv")
+def process_data(data_size):
+    data = pd.read_csv("data/Train.csv")
     data_clean = _clean_data(data)
-    data_extracted = _extract_pos_neg(
-        data_clean, minimum_positive_reviewer_score, minimum_positive_word_count,
-        maximum_negative_reviewer_score, minimum_negative_word_count
-    )
-    data_sampled = _sample(data_extracted, sample_size)
+    data_sampled = _sample(data_clean, data_size)
     _save_preprocessed_data(data_sampled)
     
 
 if __name__ == "__main__":
-    data = pd.read_csv("data/Hotel_Reviews.csv")
-    #data_length = len(data)
-    data_length = 10000
+    data = pd.read_csv("data/Train.csv")
+    data_length = len(data)
     process_data(data_length)

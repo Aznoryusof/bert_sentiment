@@ -30,7 +30,7 @@ def _training_setup(data_dict):
 
     optimizer = AdamW(
         model.parameters(),
-        lr = 2e-5,
+        lr = 1e-5,
         eps = 1e-8
     )
 
@@ -62,7 +62,7 @@ def _save_model(model, tokenizer):
 
 def train():
     device = gpu_setup()
-    data_dict = build_tensor("hotel_reviews_processed.csv")
+    data_dict = build_tensor("Train_processed.csv")
     setup_dict = _training_setup(data_dict)
     results_dict = training_loop(
             epochs, setup_dict["model"], data_dict["train_dataloader"], 

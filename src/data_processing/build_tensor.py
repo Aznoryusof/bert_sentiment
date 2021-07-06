@@ -8,17 +8,25 @@ sys.path.append(MAIN_DIR)
 import pandas as pd
 import numpy as np
 import torch
+import random
 from transformers import BertTokenizer
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
-from config import seed, MAX_LEN, batch_size
+from config import seed, MAX_LEN, batch_size, test_size
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+
+
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
 
 
 def _train_test_split(df, seed):
     df_shuffled = df.sample(frac=1).reset_index(drop=True)
     train_inputs, test_inputs, train_labels, test_labels = train_test_split(
-        df_shuffled["review"], df_shuffled["label"], random_state=seed, test_size=0.3
+        df_shuffled["Text"], df_shuffled["Label"], random_state=seed, test_size=test_size
     )
 
     return train_inputs, test_inputs, train_labels, test_labels
@@ -118,7 +126,7 @@ def _iterator(processed_data_dict):
 
 def build_tensor(data_path):
     """This function converts data of comments and labels from a csv file
-    to Pytorch tensors for fine-tuning BERT Model.   
+    to Pytorch tensors for fine-tuning BERT Model
 
     Args:
         data_path (str): The path of the csv file to be 
@@ -142,7 +150,3 @@ def build_tensor(data_path):
         "test_labels": test_labels,
         "tokenizer": tokenized_dict["tokenizer"]
     }
-
-
-if __name__ == "__main__":
-    build_tensor("hotel_reviews_processed.csv")
