@@ -38,7 +38,6 @@ def _check_model_exist():
 def _load_model_artifacts(device):
     print("\nLoading model artifacts...")
 
-    vecs = np.load('result/embeddings.npy')
     model = BertForSequenceClassification.from_pretrained(
         RESULT_DIR,
         output_hidden_states = True,
@@ -49,7 +48,6 @@ def _load_model_artifacts(device):
 
     return {
         "model": model,
-        "vecs": vecs,
         "tokenizer": tokenizer
     }
 
@@ -57,7 +55,6 @@ def _load_model_artifacts(device):
 def _load_model_artifacts_cpu():
     print("\nLoading model artifacts...")
 
-    vecs = np.load('result/embeddings.npy')
     model = BertForSequenceClassification.from_pretrained(
         RESULT_DIR,
         output_hidden_states = True,
@@ -67,7 +64,6 @@ def _load_model_artifacts_cpu():
 
     return {
         "model": model,
-        "vecs": vecs,
         "tokenizer": tokenizer
     }
 

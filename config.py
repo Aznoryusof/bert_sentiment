@@ -12,7 +12,7 @@ minimum_positive_reviewer_score = 3
 
 seed = 0
 MAX_LEN = 128
-batch_size = 32
+batch_size = 16
 epochs = 2
 use_gpu_predict = False
 

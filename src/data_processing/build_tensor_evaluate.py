@@ -67,7 +67,7 @@ def build_tensor_evaluate(data_dict):
     test_labels = torch.tensor(test_labels)
 
     # Set the batch size.  
-    batch_size = 32  
+    batch_size = batch_size
 
     # Create the DataLoader.
     test_data = TensorDataset(test_inputs, test_masks, test_labels)

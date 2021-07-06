@@ -55,8 +55,8 @@ def evaluate(test_dataloader, model, device):
         # speeding up prediction
         with torch.no_grad():
             # Forward pass, calculate logit predictions
-            outputs = model(b_input_ids, token_type_ids=None, 
-                            attention_mask=b_input_mask)
+            outputs = model(b_input_ids.long(), token_type_ids=None, 
+                            attention_mask=b_input_mask.long())
 
         logits = outputs[0]
 

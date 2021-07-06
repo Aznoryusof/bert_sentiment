@@ -110,10 +110,10 @@ def training_loop(
             # have provided the `labels`.
             # The documentation for this `model` function is here: 
             # https://huggingface.co/transformers/v2.2.0/model_doc/bert.html#transformers.BertForSequenceClassification
-            outputs = model(b_input_ids, 
+            outputs = model(b_input_ids.long(), 
                         token_type_ids=None, 
-                        attention_mask=b_input_mask, 
-                        labels=b_labels)
+                        attention_mask=b_input_mask.long(), 
+                        labels=b_labels.long())
             
             # The call to `model` always returns a tuple, so we need to pull the 
             # loss value out of the tuple.
@@ -189,9 +189,9 @@ def training_loop(
                 # differentiates sentence 1 and 2 in 2-sentence tasks.
                 # The documentation for this `model` function is here: 
                 # https://huggingface.co/transformers/v2.2.0/model_doc/bert.html#transformers.BertForSequenceClassification
-                outputs = model(b_input_ids, 
+                outputs = model(b_input_ids.long(), 
                                 token_type_ids=None, 
-                                attention_mask=b_input_mask)
+                                attention_mask=b_input_mask.long())
             
             # Get the "logits" output by the model. The "logits" are the output
             # values prior to applying an activation function like the softmax.
