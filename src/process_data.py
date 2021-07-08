@@ -1,18 +1,38 @@
-import pandas as pd
 import os, sys
-
 
 MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
-from config import *
+import pandas as pd
+import numpy as np
+import random
+import torch
+from config import START_LEN, END_LEN, seed
+
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
+
+def _custom_truncate(text, start_len, end_len):
+
+    no_words = len(text.split())
+    text_front = " ".join(text.split()[:3])
+    text_end = " ".join(text.split()[(no_words-end_len):no_words + 1])
+    
+    text_truncated = text_front + " " + text_end
+    
+    return text_truncated
 
 
 def clean_data(df):
     df_clean = df.copy()
     df_clean["Text"] = df_clean["Text"].str.lower()
     #df_clean["Text"] = df_clean["Text"].str.replace("<br />", " ")
+    df_clean["Text"] = df_clean["Text"].apply(_custom_truncate, start_len=START_LEN, end_len=END_LEN)  
 
     return df_clean
 
