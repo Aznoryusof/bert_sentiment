@@ -8,8 +8,7 @@ sys.path.append(MAIN_DIR)
 from src.data_processing.build_tensor import *
 from src.data_processing.build_tensor_evaluate import *
 from src.model.bert_training_loop import *
-from src.evaluate.plot_training import *
-from src.evaluate.evaluate import *
+from src.utils.plot_training import plot_training
 from src.utils.gpu_setup import gpu_setup
 from config import epochs
 

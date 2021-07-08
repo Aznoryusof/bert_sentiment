@@ -9,6 +9,7 @@ import datetime
 import random
 import torch
 from config import seed
+from utils.model_utilities import format_time
 
 
 def _flat_accuracy(preds, labels):
@@ -16,17 +17,6 @@ def _flat_accuracy(preds, labels):
     labels_flat = labels.flatten()
     
     return np.sum(pred_flat == labels_flat) / len(labels_flat)
-
-
-def _format_time(elapsed):
-    '''
-    Takes a time in seconds and returns a string hh:mm:ss
-    '''
-    # Round to the nearest second.
-    elapsed_rounded = int(round((elapsed)))
-    
-    # Format as hh:mm:ss
-    return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
 def training_loop(
@@ -72,7 +62,7 @@ def training_loop(
             if step % 20 == 0 and not step == 0:
                 
                 # Format the elapse time
-                elapsed_time = _format_time(time.time() - t0)
+                elapsed_time = format_time(time.time() - t0)
                 
                 # Print out the training progress
                 print('  Batch {:>5,}  of  {:>5,}   Elapsed: {:}.'.format(step, len(train_dataloader), elapsed_time))
@@ -119,7 +109,7 @@ def training_loop(
 
         print("")
         print("  Average training loss: {0:.2f}".format(avg_train_loss))
-        print("  Training epoch took: {:}".format(_format_time(time.time() - t0)))
+        print("  Training epoch took: {:}".format(format_time(time.time() - t0)))
         
         # Test on the validation set after each epoch
         print("")
@@ -168,7 +158,7 @@ def training_loop(
             
         # Report the final accuracy for this validation run.
         print("  Accuracy: {0:.2f}".format(eval_accuracy/nb_eval_steps))
-        print("  Validation took: {:}".format(_format_time(time.time() - t0)))
+        print("  Validation took: {:}".format(format_time(time.time() - t0)))
 
     print("")
     print("Training complete!")

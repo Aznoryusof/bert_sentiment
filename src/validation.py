@@ -16,19 +16,9 @@ from transformers import BertForSequenceClassification, BertTokenizer
 from process_data import clean_data
 from data_processing.build_tensor_evaluate import build_tensor_evaluate
 from src.utils.gpu_setup import gpu_setup
+from utils.model_utilities import format_time, load_model_artifacts
 
 from config import MAX_LEN
-
-
-def _format_time(elapsed):
-    '''
-    Takes a time in seconds and returns a string hh:mm:ss
-    '''
-    # Round to the nearest second.
-    elapsed_rounded = int(round((elapsed)))
-    
-    # Format as hh:mm:ss
-    return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
 def _predict(test_dataloader, model, device):
@@ -50,7 +40,7 @@ def _predict(test_dataloader, model, device):
         # Progress update every 20 batches.
         if step % 20 == 0 and not step == 0:
             # Calculate elapsed time in minutes.
-            elapsed = _format_time(time.time() - t0)
+            elapsed = format_time(time.time() - t0)
             
             # Report progress.
             print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(test_dataloader), elapsed))
@@ -88,39 +78,6 @@ def _predict(test_dataloader, model, device):
     }
 
 
-def _load_model_artifacts(device):
-    print("\nLoading model artifacts...")
-
-    model = BertForSequenceClassification.from_pretrained(
-        RESULT_DIR,
-        output_hidden_states = True,
-    )
-
-    tokenizer = BertTokenizer.from_pretrained(RESULT_DIR)
-    model.to(device)
-
-    return {
-        "model": model,
-        "tokenizer": tokenizer
-    }
-
-
-def _load_model_artifacts_cpu():
-    print("\nLoading model artifacts...")
-
-    model = BertForSequenceClassification.from_pretrained(
-        RESULT_DIR,
-        output_hidden_states = True,
-    )
-
-    tokenizer = BertTokenizer.from_pretrained(RESULT_DIR)
-
-    return {
-        "model": model,
-        "tokenizer": tokenizer
-    }
-
-
 def _validate(path):
     df_pred = pd.read_csv(path)
     
@@ -129,7 +86,7 @@ def _validate(path):
     
     # Load the model artifacts
     device = gpu_setup()
-    model_dict = _load_model_artifacts(device)
+    model_dict = load_model_artifacts(device)
     
     # Prepare Text data for modelling
     data_dict = {
