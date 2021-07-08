@@ -9,12 +9,12 @@ sys.path.append(MAIN_DIR)
 from config import *
 
 
-def _clean_data(df):
-    data_clean=df.copy()
-    data_clean["Text"] = data_clean["Text"].str.lower()
-    #data_clean["Text"] = data_clean["Text"].str.replace("<br />", " ")
+def clean_data(df):
+    df_clean = df.copy()
+    df_clean["Text"] = df_clean["Text"].str.lower()
+    #df_clean["Text"] = df_clean["Text"].str.replace("<br />", " ")
 
-    return data_clean
+    return df_clean
 
 
 def _save_preprocessed_data(df):
@@ -45,7 +45,7 @@ def _sample(df, data_size):
 
 def process_data(data_size):
     data = pd.read_csv("data/Train.csv")
-    data_clean = _clean_data(data)
+    data_clean = clean_data(data)
     data_sampled = _sample(data_clean, data_size)
     _save_preprocessed_data(data_sampled)
     

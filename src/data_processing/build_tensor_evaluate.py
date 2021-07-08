@@ -54,9 +54,10 @@ def build_tensor_evaluate(data_dict):
     # Get the labels from the DataFrame, and convert from booleans to ints.
     test_labels = data_dict["test_labels"].to_numpy().astype(int)
 
-    print('{:>10,} positive sentiment'.format(np.sum(test_labels)))
-    print('{:>10,} negative sentiment'.format(len(test_labels) - np.sum(test_labels)))
-
+    print('{:>10,} positive sentiments'.format(np.sum(test_labels)))
+    print('{:>10,} negative sentiments'.format(len(test_labels) - np.sum(test_labels)))
+    print('')
+    
     # Pad our input tokens
     test_input_ids = pad_sequences(test_input_ids, maxlen=MAX_LEN, 
                                 dtype="long", truncating="post", padding="post")

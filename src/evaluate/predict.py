@@ -9,7 +9,7 @@ import torch
 import textwrap
 from transformers import BertForSequenceClassification, BertTokenizer
 from src.utils.gpu_setup import gpu_setup
-from config import use_gpu_predict, prediction_text
+from config import use_gpu_predict, prediction_text, MAX_LEN
 
 from config import MAX_LEN
 
@@ -72,7 +72,7 @@ def _predict_string(string, model_dict, device):
 
     encoded_text = model_dict["tokenizer"].encode_plus(
         string,
-        max_length=128,
+        max_length=MAX_LEN,
         add_special_tokens=True,
         return_token_type_ids=False,
         pad_to_max_length=True,
@@ -97,7 +97,7 @@ def _predict_string_cpu(string, model_dict):
 
     encoded_text = model_dict["tokenizer"].encode_plus(
         string,
-        max_length=128,
+        max_length=MAX_LEN,
         add_special_tokens=True,
         return_token_type_ids=False,
         pad_to_max_length=True,
