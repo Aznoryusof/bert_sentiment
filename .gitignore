@@ -10,4 +10,5 @@ local/
 check.csv
 result/
 result_*
+~$experiments.xlsx
 
