@@ -101,17 +101,19 @@ def _validate(path):
     # Perform test on validation data
     evaluated_dict = _predict(data_test_dict["test_dataloader"], model_dict["model"], device)
     
-    # negative sentiment used as positive label because for sentiment analysis, it is arguably more important to detect negative sentiments.
+    # Calculate the metrics
     accuracy = accuracy_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"]) * 100
-    precision = precision_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"], pos_label=0) * 100
+    f1_macro = f1_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"], average="macro") * 100
+    
+    # negative sentiment used as positive label because for sentiment analysis, it is arguably more important to detect negative sentiments.
+    precision = precision_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"], pos_label=0) * 100 
     recall = recall_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"], pos_label=0) * 100
-    f1 = f1_score(evaluated_dict["true_labels"], evaluated_dict["prediction_labels"], pos_label=0) * 100
     
     return {
-        "accuracy": str(round(accuracy, 2)) + "%", 
+        "accuracy": str(round(accuracy, 2)) + "%",
+        "f1_macro": str(round(f1_macro, 2)) + "%", 
         "precision": str(round(precision, 2)) + "%", 
         "recall": str(round(recall, 2)) + "%", 
-        "f1": str(round(f1, 2)) + "%"
     }
 
 
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     scores_dict = _validate(args.file_path)
        
     # Print the results
-    results = [[scores_dict["accuracy"], scores_dict["precision"], scores_dict["recall"], scores_dict["f1"]]]
-    print("{}".format("="*50))
-    print(tabulate(results, headers=["accuracy", "precision-neg", "recall-neg", "f1-neg"])) 
-    print("{}".format("="*50))
+    results = [[scores_dict["accuracy"], scores_dict["f1_macro"], scores_dict["precision"], scores_dict["recall"]]]
+    print("{}".format("="*53))
+    print(tabulate(results, headers=["accuracy", "f1_macro", "precision-neg", "recall-neg"]))
+    print("{}".format("="*53))
