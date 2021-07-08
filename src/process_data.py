@@ -30,7 +30,7 @@ def _custom_truncate(text, start_len, end_len):
 
 def clean_data(df):
     df_clean = df.copy()
-    df_clean["Text"] = df_clean["Text"].str.lower()
+    #df_clean["Text"] = df_clean["Text"].str.lower()
     #df_clean["Text"] = df_clean["Text"].str.replace("<br />", " ")
     #df_clean["Text"] = df_clean["Text"].apply(_custom_truncate, start_len=START_LEN, end_len=END_LEN)
     
