@@ -9,4 +9,5 @@ data/
 local/
 check.csv
 result/
+result_*
 
