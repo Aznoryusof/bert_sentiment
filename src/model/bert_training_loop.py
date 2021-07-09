@@ -12,6 +12,13 @@ from config import seed
 from utils.model_utilities import format_time
 
 
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
+
 def _flat_accuracy(preds, labels):
     pred_flat = np.argmax(preds, axis=1).flatten()
     labels_flat = labels.flatten()
@@ -28,12 +35,6 @@ def training_loop(
     scheduler,
     device
 ):
-    
-    # Set seed 
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
 
     # The average loss after each epoch
     loss_values = []

@@ -18,6 +18,12 @@ from utils.model_utilities import format_time, check_model_exist, load_model_art
 
 from config import use_gpu_test, MAX_LEN
 
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
 
 def _predict_string(string, model_dict, device):
 

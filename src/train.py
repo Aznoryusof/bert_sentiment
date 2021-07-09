@@ -11,11 +11,17 @@ from src.data_processing.build_tensor_evaluate import *
 from src.model.bert_training_loop import *
 from src.utils.plot_training import plot_training
 from src.utils.gpu_setup import gpu_setup
-from config import epochs
+from config import epochs, seed
 
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 from transformers import get_linear_schedule_with_warmup
 import torch
+
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
 
 
 def _training_setup(data_dict):

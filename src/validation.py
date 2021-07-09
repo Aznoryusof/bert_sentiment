@@ -18,7 +18,13 @@ from data_processing.build_tensor_evaluate import build_tensor_evaluate
 from src.utils.gpu_setup import gpu_setup
 from utils.model_utilities import format_time, load_model_artifacts
 
-from config import MAX_LEN
+from config import MAX_LEN, seed
+
+# Set seed 
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
 
 
 def _predict(test_dataloader, model, device):
