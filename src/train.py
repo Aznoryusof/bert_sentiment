@@ -36,7 +36,7 @@ def _training_setup(data_dict):
 
     optimizer = AdamW(
         model.parameters(),
-        lr = 1e-5,
+        lr = 0.5e-5,
         eps = 1e-8
     )
 
