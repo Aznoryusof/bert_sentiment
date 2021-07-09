@@ -20,7 +20,7 @@ import torch
 
 def _training_setup(data_dict):
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-cased",
+        "bert-base-uncased",
         num_labels = 2,
         output_attentions = False,
         output_hidden_states = False,
