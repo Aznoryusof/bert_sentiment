@@ -7,6 +7,7 @@ sys.path.append(MAIN_DIR)
 
 import time
 import torch
+import random
 import pandas as pd
 import numpy as np
 from tabulate import tabulate
