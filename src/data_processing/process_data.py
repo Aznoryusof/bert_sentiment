@@ -1,6 +1,6 @@
 import os, sys
 
-MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MAIN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(MAIN_DIR, "data/")
 sys.path.append(MAIN_DIR)
 
@@ -18,7 +18,6 @@ torch.cuda.manual_seed_all(seed)
 
 
 def _custom_truncate(text, start_len, end_len):
-
     no_words = len(text.split())
     text_front = " ".join(text.split()[:3])
     text_end = " ".join(text.split()[(no_words-end_len):no_words + 1])
@@ -30,7 +29,7 @@ def _custom_truncate(text, start_len, end_len):
 
 def clean_data(df):
     df_clean = df.copy()
-    #df_clean["Text"] = df_clean["Text"].str.lower()
+    df_clean["Text"] = df_clean["Text"].str.lower()
     #df_clean["Text"] = df_clean["Text"].str.replace("<br />", " ")
     #df_clean["Text"] = df_clean["Text"].apply(_custom_truncate, start_len=START_LEN, end_len=END_LEN)
     
@@ -63,14 +62,9 @@ def _sample(df, data_size):
     return df_final
 
 
-def process_data(data_size):
-    data = pd.read_csv("data/Train.csv")
+def process_data(df, data_size):
+    data = df.copy()
     data_clean = clean_data(data)
     data_sampled = _sample(data_clean, data_size)
-    _save_preprocessed_data(data_sampled)
     
-
-if __name__ == "__main__":
-    data = pd.read_csv("data/Train.csv")
-    data_length = len(data)
-    process_data(data_length)
+    return data_sampled

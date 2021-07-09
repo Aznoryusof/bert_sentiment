@@ -5,4 +5,7 @@ START_LEN = 382
 END_LEN = 128
 batch_size = 16
 epochs = 10
+ATTENTION_PROB_DROPOUT_PROB=0.1
+HIDDEN_DROPOUT_PROB=0.1
+SAVE_PROCESSED = True
 use_gpu_test = True

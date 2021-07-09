@@ -12,7 +12,7 @@ import random
 from transformers import BertTokenizer
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
-from config import seed, MAX_LEN, batch_size, test_size
+from config import seed, MAX_LEN, batch_size, test_size, SAVE_PROCESSED
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
 
@@ -124,14 +124,8 @@ def _iterator(processed_data_dict):
     return train_dataloader, validation_dataloader
 
 
-def build_tensor(data_path):
-    """This function converts data of comments and labels from a csv file
-    to Pytorch tensors for fine-tuning BERT Model
-
-    Args:
-        data_path (str): The path of the csv file to be 
-    """    
-    data = pd.read_csv(os.path.join(DATA_DIR, data_path), engine="python")
+def build_tensor(df):
+    data = df.copy()
     complete_train_inputs, test_inputs, complete_train_labels, test_labels = _train_test_split(data, seed)
     complete_train_labels = complete_train_labels.to_numpy().astype(int)
 
@@ -143,6 +137,13 @@ def build_tensor(data_path):
     )
     train_dataloader, validation_dataloader = _iterator(processed_data_dict)
 
+    # Print processed train data to excel file
+    if SAVE_PROCESSED:
+        with pd.ExcelWriter("data/Train_processed.xlsx", options={'in_memory': True}) as writer:
+            pd.DataFrame(processed_data_dict["train_inputs"].numpy()).to_excel(writer, sheet_name="train_inputs")
+            pd.DataFrame(processed_data_dict["train_masks"].numpy()).to_excel(writer, sheet_name="train_masks")
+            pd.DataFrame(processed_data_dict["train_labels"].numpy()).to_excel(writer, sheet_name="train_labels")
+    
     return {
         "train_dataloader": train_dataloader,
         "validation_dataloader": validation_dataloader,
