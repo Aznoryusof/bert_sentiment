@@ -11,7 +11,7 @@ from src.data_processing.build_tensor_evaluate import *
 from src.model.bert_training_loop import *
 from src.utils.plot_training import plot_training
 from src.utils.gpu_setup import gpu_setup
-from config import epochs, ATTENTION_PROB_DROPOUT_PROB, HIDDEN_DROPOUT_PROB
+from config import epochs
 
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 from transformers import get_linear_schedule_with_warmup
@@ -20,12 +20,10 @@ import torch
 
 def _training_setup(data_dict):
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-uncased",
+        "bert-base-cased",
         num_labels = 2,
         output_attentions = False,
-        output_hidden_states = False,
-        attention_probs_dropout_prob=ATTENTION_PROB_DROPOUT_PROB,
-        hidden_dropout_prob=HIDDEN_DROPOUT_PROB
+        output_hidden_states = False
     )
 
     model.cuda()
