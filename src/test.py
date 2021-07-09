@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 from tabulate import tabulate
 from transformers import BertForSequenceClassification, BertTokenizer
-from process_data import clean_data
+from data_processing.process_data import clean_data
 from data_processing.build_tensor_evaluate import build_tensor_evaluate
 from src.utils.gpu_setup import gpu_setup
 from utils.model_utilities import format_time, check_model_exist, load_model_artifacts, load_model_artifacts_cpu

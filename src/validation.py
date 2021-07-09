@@ -13,7 +13,7 @@ import numpy as np
 from tabulate import tabulate
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from transformers import BertForSequenceClassification, BertTokenizer
-from process_data import clean_data
+from data_processing.process_data import clean_data
 from data_processing.build_tensor_evaluate import build_tensor_evaluate
 from src.utils.gpu_setup import gpu_setup
 from utils.model_utilities import format_time, load_model_artifacts
