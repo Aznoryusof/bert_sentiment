@@ -4,6 +4,6 @@ MAX_LEN = 512
 START_LEN = 128
 END_LEN = 382
 batch_size = 16
-epochs = 6
+epochs = 7
 SAVE_PROCESSED = True
 use_gpu_test = True
