@@ -34,7 +34,7 @@ def _train_test_split(df, seed):
 
 def _tokenize(complete_train_inputs):
     print('Loading BERT tokenizer...')
-    tokenizer = BertTokenizer.from_pretrained('bert-base-cased', do_lower_case=False)
+    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
 
     input_ids = []
     lengths = []
