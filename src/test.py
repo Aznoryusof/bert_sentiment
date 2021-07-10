@@ -17,7 +17,7 @@ from data_processing.build_tensor_evaluate import build_tensor_evaluate
 from src.utils.gpu_setup import gpu_setup
 from utils.model_utilities import format_time, check_model_exist, load_model_artifacts, load_model_artifacts_cpu
 
-from config import use_gpu_test, MAX_LEN
+from config import use_gpu_test, MAX_LEN, seed
 
 # Set seed 
 random.seed(seed)
