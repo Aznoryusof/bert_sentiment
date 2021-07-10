@@ -2,11 +2,15 @@
 This project uses a pre-trained BERT model, fine-tuned on only the training data provided to predict sentiments of texts.
 
 ## Setup
-Firstly, go to the project directory titled "bert_sentiment" and install the necessary libraries
-```
-pip install -r requirements.txt
-```
-
+1. Install pytorch version 1.7.0 by following the instructions here
+	 ```
+   https://pytorch.org/
+   ```
+2. Next, go to the project directory titled "bert_sentiment" and install the necessary libraries
+   ```
+   pip install -r requirements.txt
+   ```
+   
 ## Download model artifacts
 Next download the necessary model artifacts including the Bert Model that has been finetuned by running the following script.
 ```
