@@ -11,3 +11,9 @@ Kaggle
 transformers==4.5.0
 tabulate
 openpyxl
+urllib
+google_drive_downloader
+time
+random
+numpy
+datetime
