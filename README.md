@@ -1,5 +1,9 @@
 # Sentiment Analysis with BERT
-This project uses a pre-trained BERT model, fine-tuned on only the training data provided to predict sentiments of texts.
+This project uses a pre-trained BERT model to predict the sentiments of movie reviews.
+
+The BERT model is pre-trained on a large corpus of English data via self-supervision, i.e. without any labelling. During training, it has two objectives: Masked Language Modelling and Next Sentence Predictions. The model learns representations of the English language, which could be used as features in the sentiment classification task.
+
+The model used in this project is the uncased version, and is fine-tuned on only the training data that had been provided.
 
 ## Setup
 1. Install pytorch version 1.7.0 by following the instructions here
