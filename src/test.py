@@ -70,7 +70,7 @@ def _predict_test(path):
     # Convert to df to use data cleaning pipeline
     df_test = pd.DataFrame(
         {
-            "Text": pd.read_csv(path, header=None, squeeze=True)
+            "Text": pd.read_csv(path, header=None, squeeze=True, engine='python')
         }
     )
 
